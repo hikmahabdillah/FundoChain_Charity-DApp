@@ -1,4 +1,9 @@
 import Button from "../components/common/Button";
+import Navbar from "../components/common/Navbar";
+import AboutSection from "../components/sections/AboutSection";
+import HeroSections from "../components/sections/HeroSections";
+import HowItWorksSection from "../components/sections/HowItWorksSection";
+import TransactionsSection from "../components/sections/TransactionsSection";
 
 const Home = () => {
   return (
@@ -11,6 +16,11 @@ const Home = () => {
           className="bg-brown text-sm font-semibold hover:bg-yellow text-dark-brown !rounded-full"
           onClick={() => alert("Clicked")}
         /> */}
+        <Navbar />
+        <HeroSections />
+        <HowItWorksSection />
+        <TransactionsSection />
+        <AboutSection />
       </div>
     </div>
   );
