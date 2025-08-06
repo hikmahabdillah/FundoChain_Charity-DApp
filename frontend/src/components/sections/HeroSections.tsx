@@ -1,4 +1,3 @@
-import React from "react";
 import Button from "../common/Button";
 import { motion } from "motion/react";
 
@@ -36,7 +35,7 @@ const HeroSections = () => {
           animate={{
             opacity: 1,
             y: 0,
-            transition: { duration: 1, delay: 0.5 },
+            transition: { duration: 0.5, delay: 0.5 },
           }}
         />
       </div>
@@ -48,7 +47,7 @@ const HeroSections = () => {
           animate={{
             opacity: 1,
             x: 0,
-            transition: { duration: 1.5, delay: 1.25 },
+            transition: { duration: 0.5, delay: 1 },
           }}
         />
       </div>
@@ -60,7 +59,7 @@ const HeroSections = () => {
           animate={{
             opacity: 1,
             x: 0,
-            transition: { duration: 1.5, delay: 0.75 },
+            transition: { duration: 0.5, delay: 0.75 },
           }}
         />
       </div>

@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
     <motion.header
       className="fixed top-0 left-0 right-0 z-50 bg-[#fef4e8]"
       initial={{ opacity: 0, y: -50 }}
-      animate={{ opacity: 1, y: 0, transition: { duration: 1 } }}
+      animate={{ opacity: 1, y: 0, transition: { duration: 0.5 } }}
     >
       <nav className="w-full max-w-[1450px] mx-auto flex items-center justify-between py-4 px-6">
         {/* Logo */}

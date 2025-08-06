@@ -1,4 +1,3 @@
-import React from "react";
 import DonationSteps from "../DonationSteps";
 import { steps } from "../../data/donationStep";
 import type { DonationStepsProps } from "../../types/steps";
@@ -28,6 +27,7 @@ const HowItWorksSection = () => {
             icon={step.icon}
             title={step.title}
             description={step.description}
+            delay={step.delay}
           />
         ))}
       </div>
