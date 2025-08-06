@@ -8,7 +8,7 @@ import TransactionsSection from "../components/sections/TransactionsSection";
 const Home = () => {
   return (
     <div className="min-h-screen bg-[#FEF3E2] font-poppins">
-      <div className="w-full container mx-auto">
+      <div className="w-full max-w-[1550px] mx-auto">
         {/* <Button
           type="button"
           text="Contribute"
