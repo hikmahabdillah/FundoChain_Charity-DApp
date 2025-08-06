@@ -28,7 +28,7 @@ const Navbar: React.FC = () => {
         </a>
 
         {/* Navigation Links */}
-        <ul className="hidden md:flex items-center gap-6 text-sm text-brown font-medium">
+        <ul className="hidden md:flex items-center gap-6 text-md text-brown font-medium">
           {navItems.map((item) => (
             <li key={item.label}>
               <a href={item.href} className="hover:text-red-500 transition">
