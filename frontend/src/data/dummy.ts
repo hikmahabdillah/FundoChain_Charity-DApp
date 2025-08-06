@@ -1,4 +1,6 @@
-export const data = [
+import type { Donation } from "../types/donation";
+
+export const data: Donation[] = [
   {
     id: 1,
     address: "0xAbC1234567890dEfABC1234567890DefABc12345",
@@ -6,6 +8,7 @@ export const data = [
     message: "Semangat terus untuk proyek ini!",
     isDisplay: true,
     amount: 0.5,
+    createdAt: new Date("2025-08-01T10:30:00Z"),
   },
   {
     id: 2,
@@ -14,6 +17,7 @@ export const data = [
     message: "Terima kasih telah membuat perubahan.",
     isDisplay: false,
     amount: 1.2,
+    createdAt: new Date("2025-08-02T08:15:00Z"),
   },
   {
     id: 3,
@@ -22,6 +26,7 @@ export const data = [
     message: "Good luck!",
     isDisplay: true,
     amount: 0.75,
+    createdAt: new Date("2025-08-03T14:00:00Z"),
   },
   {
     id: 4,
@@ -30,6 +35,7 @@ export const data = [
     message: "Semoga sukses!",
     isDisplay: true,
     amount: 0.3,
+    createdAt: new Date("2025-08-04T09:45:00Z"),
   },
   {
     id: 5,
@@ -38,5 +44,6 @@ export const data = [
     message: "Sedikit bantuan dari saya.",
     isDisplay: false,
     amount: 2.0,
+    createdAt: new Date("2025-08-05T13:20:00Z"),
   },
 ];

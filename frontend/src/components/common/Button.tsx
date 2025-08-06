@@ -1,13 +1,5 @@
 import type React from "react";
-
-type ButtonProps = {
-  type: "button" | "submit" | "reset";
-  text: string;
-  icon?: React.ReactNode; // apapun yang bisa dirender sebagai ikon
-  className?: string;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  disabled?: boolean;
-};
+import type { ButtonProps } from "../../types/button";
 
 const Button: React.FC<ButtonProps> = ({
   // functional component dan props sesuai dengan ButtonProps

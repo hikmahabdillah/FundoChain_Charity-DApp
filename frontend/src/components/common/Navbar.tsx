@@ -1,10 +1,6 @@
-import React from "react";
+import type React from "react";
 import Button from "./Button";
-
-type NavItem = {
-  label: string;
-  href: string;
-};
+import type { NavItem } from "../../types/navmenu";
 
 const navItems: NavItem[] = [
   { label: "Home", href: "#hero" },
