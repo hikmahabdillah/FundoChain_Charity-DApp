@@ -1,4 +1,6 @@
 import type React from "react";
+import Button from "../common/Button";
+import { Link } from "react-router-dom";
 
 type CardProps = {
   className?: string;
@@ -11,8 +13,8 @@ const Card: React.FC<CardProps> = ({ className, children }) => (
 
 const TransactionsSection = () => {
   return (
-    <section id="transactions" className=" w-full">
-      <div className="flex items-center gap-14">
+    <section id="transactions" className="w-full">
+      <div className="flex items-center gap-14 pt-10">
         <div className="w-full h-0.5 bg-dark-brown"></div>
         <div className="flex items-center justify-center w-[200px]">
           <img src="/leftHand.webp" width={"100px"} height={"50px"} alt="" />
@@ -24,12 +26,13 @@ const TransactionsSection = () => {
         <h2 className="font-semibold text-5xl text-center text-dark-brown">
           Together We Can Make a Difference
         </h2>
-        <p className="mt-4 text-md text-dark-brown w-full max-w-2xl text-center">
+        <p className="mt-4 text-md text-dark-brown w-full max-w-2xl text-center font-medium">
           Thank you for being a part of this journey. Below is a summary of our
           fundraising progress and generous supporters.
         </p>
       </div>
-      <div className="grid grid-cols-3 grid-rows-4 gap-4 p-6 bg-[#fef5ea] h-auto w-full max-w-5xl mx-auto my-10">
+
+      <div className="grid grid-cols-3 grid-rows-4 gap-4 p-6 bg-[#fef5ea] h-auto w-full max-w-5xl mx-auto mt-7">
         {/* Goals Card */}
         <Card className="col-span-1 row-span-2 !shadow-none flex flex-col gap-2 text-dark-brown self-center">
           <h3 className="font-semibold text-lg">Goals</h3>
@@ -70,11 +73,37 @@ const TransactionsSection = () => {
 
         {/* Latest Donations Card */}
         <Card className="col-span-1 row-span-3 bg-emerald-900 flex flex-col justify-between gap-3">
-          <div className="flex items-center gap-3 w-full">
-            <h3 className="font-medium text-lg text-nowrap text-light-yellow">
-              Latest Donations
-            </h3>
-            <div className="w-full h-0.75 bg-light-yellow"></div>
+          <div className="flex flex-col gap-3">
+            <div className="flex items-center gap-3 w-full">
+              <h3 className="font-medium text-lg text-nowrap text-light-yellow">
+                Latest Donations
+              </h3>
+              <div className="w-full h-0.75 bg-light-yellow"></div>
+            </div>
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center justify-between font-medium text-white">
+                <li>0.05ETH</li>
+                <p>from 0x123...ab</p>
+              </div>
+              <div className="flex items-center justify-between font-medium text-white">
+                <li>0.05ETH</li>
+                <p>from 0x123...ab</p>
+              </div>
+              <div className="flex items-center justify-between font-medium text-white">
+                <li>0.05ETH</li>
+                <p>from 0x123...ab</p>
+              </div>
+              <div className="flex items-center justify-between font-medium text-white">
+                <li>0.05ETH</li>
+                <p>from 0x123...ab</p>
+              </div>
+              <Link
+                to={"/transactions-log"}
+                className="font-medium underline text-light-yellow self-end mt-3"
+              >
+                View all
+              </Link>
+            </div>
           </div>
           <p className="text-sm text-light-yellow font-medium">
             Testnet Ethereum Sepolia
@@ -107,6 +136,19 @@ const TransactionsSection = () => {
             </h3>
           </div>
         </Card>
+      </div>
+
+      <div className="flex flex-col items-center justify-center gap-4">
+        <p className="mt-4 text-md text-dark-brown text-center font-medium">
+          Be part of the change. Every contribution matters.
+        </p>
+        <Button
+          type="button"
+          text="Donate Now"
+          icon={<img src="/Donate.webp" width={"30px"} alt="Love Icon" />}
+          className="bg-brown text-md font-semibold hover:bg-yellow text-dark-brown !rounded-full"
+          onClick={() => {}}
+        />
       </div>
     </section>
   );

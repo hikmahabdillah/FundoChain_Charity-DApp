@@ -21,7 +21,7 @@ const HeroSections = () => {
           type="button"
           text="Contribute"
           icon={<img src="/Two Hearts.webp" width={"30px"} alt="Love Icon" />}
-          className="bg-brown text-sm font-semibold hover:bg-yellow text-dark-brown !rounded-full"
+          className="bg-brown text-sm font-semibold hover:bg-yellow text-dark-brown !rounded-full z-10"
           onClick={() => {
             const section = document.getElementById("transactions");
             section?.scrollIntoView();
