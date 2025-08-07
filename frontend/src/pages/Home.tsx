@@ -1,6 +1,7 @@
 import Button from "../components/common/Button";
 import Navbar from "../components/common/Navbar";
 import AboutSection from "../components/sections/AboutSection";
+import FooterSection from "../components/sections/FooterSection";
 import HeroSections from "../components/sections/HeroSections";
 import HowItWorksSection from "../components/sections/HowItWorksSection";
 import TransactionsSection from "../components/sections/TransactionsSection";
@@ -21,6 +22,7 @@ const Home = () => {
         <HowItWorksSection />
         <TransactionsSection />
         <AboutSection />
+        <FooterSection />
       </div>
     </div>
   );
