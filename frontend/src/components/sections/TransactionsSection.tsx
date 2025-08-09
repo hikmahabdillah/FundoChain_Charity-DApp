@@ -65,7 +65,7 @@ const TransactionsSection = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <section id="transactions" className="w-full">
+    <section id="transactions" className="w-full relative">
       <div className="flex items-center gap-14 pt-10">
         <motion.div
           className="h-0.5 bg-dark-brown"
@@ -289,13 +289,10 @@ const TransactionsSection = () => {
         {/* Call to Action Card */}
         <Card
           ref={ref}
-          className="col-span-1 row-span-1 bg-light-yellow flex items-center justify-center text-dark-brown font-semibold"
+          className="col-span-1 row-span-1 !p-0 shadow-none flex items-center justify-center text-dark-brown font-semibold"
         >
-          <div className="flex items-center gap-3 mx-8">
-            <img src="/Two Hearts.webp" width={"40px"} alt="" />
-            <h3 className="font-semibold text-md">
-              Bring happiness to their lives
-            </h3>
+          <div className=" pointer-events-none">
+            <img src="/coingecko.png" alt="CoinGecko" className="w-full" />
           </div>
         </Card>
       </div>
