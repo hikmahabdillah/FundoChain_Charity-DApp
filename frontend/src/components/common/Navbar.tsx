@@ -13,7 +13,7 @@ const navItems: NavItem[] = [
 const Navbar: React.FC = () => {
   return (
     <motion.header
-      className="fixed top-0 left-0 right-0 z-50 bg-[#fef4e8]"
+      className="fixed top-0 left-0 right-0 z-40 bg-[#fef4e8]"
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0, transition: { duration: 0.5 } }}
     >

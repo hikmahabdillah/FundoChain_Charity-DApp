@@ -1,9 +1,11 @@
-import React from "react";
+import React, { use } from "react";
 import Button from "../common/Button";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import CountUp from "../CountUp";
 import { useInView } from "react-intersection-observer";
+import { useCryptoPrices, useGetPriceInUSD } from "../../hooks/useCryptoPrices";
+import { data } from "../../data/dummy";
 
 type CardProps = {
   className?: string;
@@ -32,6 +34,35 @@ const TransactionsSection = () => {
     triggerOnce: true,
     threshold: 0.5,
   });
+
+  function shortenAddress(address: string): string {
+    const start = address.slice(0, 5); // ambil 10 karakter pertama
+    const end = address.slice(-4); // ambil 8 karakter terakhir
+    return `${start}......${end}`;
+  }
+
+  const datas = data;
+  const latestDonations = datas.slice(0, 4).map((item) => ({
+    amount: item.amount,
+    from: shortenAddress(item.address),
+    isDisplay: item.isDisplay,
+    name: item.namaDonatur,
+  }));
+
+  const totalDonaturs = datas.length;
+
+  const totalRaised = datas.reduce(
+    (acc, transaction) => acc + (transaction.amount ?? 0),
+    0
+  );
+
+  const { ethPrice, loading, error } = useCryptoPrices();
+  const goalsEth = 15; // 15 eth
+  const goalsPrice = useGetPriceInUSD(goalsEth, ethPrice?.usd ?? 0); // 15 eth
+  const raisedPrice = useGetPriceInUSD(totalRaised, ethPrice?.usd ?? 0); //10 eth
+
+  const progress = (totalRaised / goalsEth) * 100;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <section id="transactions" className="w-full">
@@ -123,7 +154,7 @@ const TransactionsSection = () => {
           <div className="flex gap-1 items-center">
             <img src="/Ethereum.webp" width={"50px"} alt="" />
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
                 <div ref={ref}>
                   {inView && (
                     <CountUp
@@ -131,14 +162,15 @@ const TransactionsSection = () => {
                       to={10}
                       separator=","
                       duration={3}
-                      className="count-up-text font-semibold text-2xl leading-5.5"
+                      className="count-up-text font-semibold text-2xl"
                     />
                   )}
                 </div>
-                <h4 className="font-semibold text-2xl leading-5.5">ETH</h4>
+                <h4 className="font-semibold text-2xl leading-7.5">ETH</h4>
               </div>
               <motion.h4 className="font-semibold text-md leading-5.5">
-                $20000
+                {loading && <div>Loading...</div>}
+                {goalsPrice}
               </motion.h4>
             </div>
           </div>
@@ -146,7 +178,9 @@ const TransactionsSection = () => {
             <div className="w-[32%] h-full bg-yellow-400 rounded-full"></div>
           </div>
           <div className="flex items-center justify-between">
-            <h4 className="font-semibold text-lg leading-5.5">32%</h4>
+            <h4 className="font-semibold text-lg leading-5.5">
+              {progress.toFixed(2)}%
+            </h4>
             <h4 className="font-semibold text-md leading-5.5">Progress</h4>
           </div>
         </Card>
@@ -168,7 +202,7 @@ const TransactionsSection = () => {
                 {inView && (
                   <CountUp
                     from={0}
-                    to={10}
+                    to={totalRaised}
                     separator=","
                     duration={3}
                     className="count-up-text font-semibold text-4xl leading-7.5"
@@ -176,7 +210,10 @@ const TransactionsSection = () => {
                 )}
                 <h4 className="font-semibold text-4xl leading-7.5">ETH</h4>
               </div>
-              <h4 className="font-semibold text-lg leading-7.5">$20000</h4>
+              <h4 className="font-semibold text-lg leading-7.5">
+                {loading && <div>Loading...</div>}
+                {raisedPrice}
+              </h4>
             </div>
           </div>
           <p className="text-sm text-center text-dark-brown font-semibold">
@@ -197,22 +234,17 @@ const TransactionsSection = () => {
               <div className="w-full h-0.75 bg-light-yellow"></div>
             </div>
             <div className="flex flex-col gap-1">
-              <div className="flex items-center justify-between font-medium text-white">
-                <li>0.05ETH</li>
-                <p>from 0x123...ab</p>
-              </div>
-              <div className="flex items-center justify-between font-medium text-white">
-                <li>0.05ETH</li>
-                <p>from 0x123...ab</p>
-              </div>
-              <div className="flex items-center justify-between font-medium text-white">
-                <li>0.05ETH</li>
-                <p>from 0x123...ab</p>
-              </div>
-              <div className="flex items-center justify-between font-medium text-white">
-                <li>0.05ETH</li>
-                <p>from 0x123...ab</p>
-              </div>
+              {latestDonations.map((donation, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between font-medium text-white"
+                >
+                  <li>{donation.amount} ETH</li>
+                  <p>
+                    from {donation?.isDisplay ? donation.name : donation.from}
+                  </p>
+                </div>
+              ))}
               <Link
                 to={"/transactions-log"}
                 className="font-medium underline text-light-yellow self-end mt-3"
@@ -240,7 +272,7 @@ const TransactionsSection = () => {
               {inView && (
                 <CountUp
                   from={0}
-                  to={128}
+                  to={totalDonaturs}
                   separator=","
                   duration={2}
                   className="font-semibold text-4xl text-yellow text-nowrap"
@@ -277,7 +309,7 @@ const TransactionsSection = () => {
           text="Donate Now"
           icon={<img src="/Donate.webp" width={"30px"} alt="Love Icon" />}
           className="bg-brown text-md font-semibold hover:bg-yellow text-dark-brown !rounded-full"
-          onClick={() => {}}
+          showModal={true}
         />
       </div>
     </section>

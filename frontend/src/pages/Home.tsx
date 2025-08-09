@@ -1,5 +1,6 @@
 import Button from "../components/common/Button";
 import Navbar from "../components/common/Navbar";
+import FormModal from "../components/FormModal";
 import AboutSection from "../components/sections/AboutSection";
 import FooterSection from "../components/sections/FooterSection";
 import HeroSections from "../components/sections/HeroSections";
@@ -23,6 +24,7 @@ const Home = () => {
         <TransactionsSection />
         <AboutSection />
         <FooterSection />
+        <FormModal />
       </div>
     </div>
   );

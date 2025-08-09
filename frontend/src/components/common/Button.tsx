@@ -11,6 +11,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   disabled = false,
   isAnimated = false,
+  showModal = false,
 }) => {
   return (
     <motion.button
@@ -27,6 +28,12 @@ const Button: React.FC<ButtonProps> = ({
               opacity: 1,
               transition: { duration: 1, delay: 0.5 },
             },
+          }
+        : {})}
+      {...(showModal
+        ? {
+            "data-modal-target": "crud-modal",
+            "data-modal-toggle": "crud-modal",
           }
         : {})}
     >
