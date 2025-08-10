@@ -1,4 +1,17 @@
+import React from "react";
+import { useCryptoPrices } from "../hooks/useCryptoPrices";
+
 const FormModal = () => {
+  const [amount, setAmount] = React.useState<number>(0.0001);
+  const [ethInUSD, setEthInUSD] = React.useState<number>(0);
+  const { ethPrice } = useCryptoPrices();
+
+  React.useEffect(() => {
+    if (!ethPrice) return;
+    const price: number = amount * (ethPrice?.usd ?? 0);
+    setEthInUSD(price);
+  }, [amount, ethPrice]);
+
   return (
     <div
       id="crud-modal"
@@ -47,10 +60,17 @@ const FormModal = () => {
                   Amount (in ETH)
                 </label>
                 <input
-                  type="text"
-                  placeholder="0,001"
+                  type="number"
+                  placeholder="0,0001"
+                  min={0.0001}
+                  step={0.0001}
                   className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                  value={amount}
+                  onChange={(e) => setAmount(parseFloat(e.target.value))}
                 />
+                <p className="text-dark-brown font-medium mt-2">
+                  ${ethInUSD.toFixed(2)}
+                </p>
               </div>
               <div>
                 <label className="block mb-2 text-sm font-semibold text-[#5C2E00]">

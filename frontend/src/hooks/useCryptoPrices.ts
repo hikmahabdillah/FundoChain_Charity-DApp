@@ -40,7 +40,7 @@ export const useCryptoPrices = () => {
 };
 
 export const useGetPriceInUSD = (eth: number, getPrice: number) => {
-  const priceInUSD = eth * getPrice;
+  const priceInUSD: number = eth * getPrice;
 
   return priceInUSD ? `$${priceInUSD.toFixed(2)}` : "$0.00";
 };

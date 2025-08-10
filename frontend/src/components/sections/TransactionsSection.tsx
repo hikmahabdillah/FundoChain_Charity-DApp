@@ -42,7 +42,11 @@ const TransactionsSection = () => {
   }
 
   const datas = data;
-  const latestDonations = datas.slice(0, 4).map((item) => ({
+  const transactions = datas.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
+
+  const latestDonations = transactions.slice(0, 4).map((item) => ({
     amount: item.amount,
     from: shortenAddress(item.address),
     isDisplay: item.isDisplay,
