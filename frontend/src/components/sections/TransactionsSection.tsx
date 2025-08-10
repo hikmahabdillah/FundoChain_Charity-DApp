@@ -120,9 +120,9 @@ const TransactionsSection = () => {
           viewport={{ once: true }}
         ></motion.div>
       </div>
-      <div className="flex flex-col items-center justify-center mt-10">
+      <div className="flex flex-col items-center justify-center mt-10 p-5">
         <motion.h2
-          className="font-semibold text-5xl text-center text-dark-brown"
+          className="font-semibold text-3xl md:text-5xl  text-center text-dark-brown"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{
             opacity: 1,
@@ -134,7 +134,7 @@ const TransactionsSection = () => {
           Together We Can Make a Difference
         </motion.h2>
         <motion.p
-          className="mt-4 text-md text-dark-brown w-full max-w-2xl text-center font-medium"
+          className="mt-4 text-sm md:text-base text-dark-brown w-full max-w-2xl text-center font-medium"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{
             opacity: 1,
@@ -148,7 +148,7 @@ const TransactionsSection = () => {
         </motion.p>
       </div>
 
-      <div className="grid grid-cols-3 grid-rows-4 gap-4 p-6 bg-[#fef5ea] h-auto w-full max-w-5xl mx-auto mt-7">
+      <div className="grid grid-cols-1 grid-rows-6 sm:grid-cols-2 lg:grid-cols-3 md:grid-rows-4 gap-4 p-6 bg-[#fef5ea] h-auto w-full max-w-5xl mx-auto mt-7">
         {/* Goals Card */}
         <Card
           ref={ref}
@@ -301,7 +301,7 @@ const TransactionsSection = () => {
         </Card>
       </div>
 
-      <div className="flex flex-col items-center justify-center gap-4">
+      <div className="flex flex-col items-center justify-center gap-4 p-5">
         <p className="mt-4 text-md text-dark-brown text-center font-medium">
           Be part of the change. Every contribution matters.
         </p>

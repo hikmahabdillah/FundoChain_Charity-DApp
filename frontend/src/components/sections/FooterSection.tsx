@@ -9,7 +9,7 @@ const FooterSection: React.FC = () => {
     { label: "About", href: "#about" },
   ];
   return (
-    <div className="flex flex-col py-10 gap-4 items-center justify-center text-dark-brown border-t border-brown mt-20">
+    <div className="flex flex-col py-10 px-5 gap-4 items-center justify-center text-dark-brown border-t border-brown mt-20">
       <img src="/fundochain-logo.webp" width={"100px"} alt="" />
       {/* Navigation Links */}
       <ul className="hidden md:flex items-center gap-6 text-md text-dark-brown font-medium">

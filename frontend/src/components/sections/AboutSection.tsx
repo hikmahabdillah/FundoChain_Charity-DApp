@@ -2,10 +2,10 @@ import { motion } from "motion/react";
 
 const AboutSection = () => {
   return (
-    <section id="about" className="py-20 w-full ps-18 overflow-hidden">
+    <section id="about" className="py-20 w-full p-5 sm:ps-18 overflow-hidden">
       <div className="flex items-center gap-5">
         <motion.h2
-          className="font-semibold text-5xl text-center text-dark-brown text-nowrap"
+          className="font-semibold text-4xl md:text-5xl  text-center text-dark-brown text-nowrap"
           initial={{ opacity: 0 }}
           whileInView={{
             opacity: 1,
@@ -26,9 +26,9 @@ const AboutSection = () => {
           viewport={{ once: true, amount: 0.5 }}
         ></motion.div>
       </div>
-      <div className="flex flex-col-reverse gap-16 pe-5 h-auto mt-8 lg:flex-row w-full max-w-[85rem] mr-auto">
+      <div className="flex flex-col-reverse gap-16 sm:pe-5 h-auto mt-8 lg:flex-row w-full max-w-[85rem] mr-auto">
         <motion.p
-          className="font-medium text-dark-brown text-justify text-lg flex-1 min-w-[300px]"
+          className="font-medium text-dark-brown text-justify md:text-base text-sm flex-1 min-w-[300px]"
           initial={{ opacity: 0, x: -100 }}
           whileInView={{
             opacity: 1,
