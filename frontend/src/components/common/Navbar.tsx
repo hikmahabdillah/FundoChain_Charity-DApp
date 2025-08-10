@@ -11,7 +11,7 @@ const navItems: NavItem[] = [
 ];
 
 const Navbar: React.FC = () => {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   return (
     <motion.header

@@ -8,11 +8,16 @@ const HeroSections = () => {
       className="pt-24 h-[850px] w-full relative grid place-items-center pb-9 overflow-hidden"
     >
       <div className="w-full max-w-4xl flex flex-col items-center justify-center gap-5 p-5">
-        <img src="/collaboration.webp" width={"70px"} alt="" />
-        <h1 className="font-bold text-6xl text-center p-5 bg-gradient-to-r from-red to-yellow bg-clip-text text-transparent">
+        <img
+          src="/collaboration.webp"
+          width={"70px"}
+          className="w-14 sm:w-[70px]"
+          alt=""
+        />
+        <h1 className="font-bold text-4xl sm:text-5xl md:text-6xl text-center p-5 bg-gradient-to-r from-red to-yellow bg-clip-text text-transparent">
           Small Funds, Big Impact
         </h1>
-        <p className="font-medium text-center text-dark-brown -mt-4 mb-3 w-[90%]">
+        <p className="font-medium text-sm md:text-base text-center text-dark-brown -mt-4 mb-3 w-[90%]">
           Even the smallest contributions can spark change. FundoChain empowers
           you to donate securely and transparently through blockchain
           technology.{" "}
@@ -29,6 +34,7 @@ const HeroSections = () => {
         />
         <motion.img
           src="/cuate.webp"
+          className="w-56 sm:w-[300px] mt-5"
           width={"300px"}
           alt=""
           initial={{ opacity: 0, y: 50 }}
@@ -42,6 +48,7 @@ const HeroSections = () => {
       <div className="absolute bottom-5 left-0">
         <motion.img
           src="/mountains-left.webp"
+          className="w-72 md:w-full"
           alt=""
           initial={{ opacity: 0, x: -100 }}
           animate={{
@@ -54,6 +61,7 @@ const HeroSections = () => {
       <div className="absolute bottom-10 right-0">
         <motion.img
           src="/mountains-right.webp"
+          className="w-72 md:w-full"
           alt=""
           initial={{ opacity: 0, x: 100 }}
           animate={{
