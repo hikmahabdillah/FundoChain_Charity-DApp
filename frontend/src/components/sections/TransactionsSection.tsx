@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React from "react";
 import Button from "../common/Button";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
