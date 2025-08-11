@@ -32,15 +32,6 @@ const Navbar: React.FC = () => {
             height="50"
             width="175"
             alt="Fundochain Logo Text"
-            className="hidden sm:block"
-          />
-          {/* Logo icon untuk bawah sm */}
-          <img
-            src="/fundochain-logo.webp"
-            height="50"
-            width="65"
-            alt="Fundochain Logo"
-            className="block sm:hidden"
           />
         </a>
 

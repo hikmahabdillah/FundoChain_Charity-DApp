@@ -1,7 +1,7 @@
 import React from "react";
 import { useCryptoPrices } from "../hooks/useCryptoPrices";
 
-const FormModal = () => {
+const DonationForm = () => {
   const [amount, setAmount] = React.useState<number>(0.0001);
   const [ethInUSD, setEthInUSD] = React.useState<number>(0);
   const { ethPrice } = useCryptoPrices();
@@ -122,4 +122,4 @@ const FormModal = () => {
   );
 };
 
-export default FormModal;
+export default DonationForm;
