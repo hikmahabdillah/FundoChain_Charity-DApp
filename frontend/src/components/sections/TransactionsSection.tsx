@@ -32,7 +32,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
 const TransactionsSection = () => {
   const { ref, inView } = useInView({
     triggerOnce: true,
-    threshold: 0.5,
+    threshold: 0.25,
   });
 
   function shortenAddress(address: string): string {
@@ -179,7 +179,11 @@ const TransactionsSection = () => {
             </div>
           </div>
           <div className="w-full h-1.5 rounded-full bg-white border border-brown">
-            <div className="w-[32%] h-full bg-yellow-400 rounded-full"></div>
+            <div
+              className={`w-[${progress.toFixed(
+                0
+              )}%] h-full bg-yellow-400 rounded-full`}
+            ></div>
           </div>
           <div className="flex items-center justify-between">
             <h4 className="font-semibold text-lg leading-5.5">
