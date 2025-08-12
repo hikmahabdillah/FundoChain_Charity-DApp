@@ -32,7 +32,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
 const TransactionsSection = () => {
   const { ref, inView } = useInView({
     triggerOnce: true,
-    threshold: 0.25,
+    threshold: 0,
   });
 
   function shortenAddress(address: string): string {
@@ -159,17 +159,13 @@ const TransactionsSection = () => {
             <img src="/Ethereum.webp" width={"50px"} alt="" />
             <div>
               <div className="flex items-center gap-1">
-                <div ref={ref}>
-                  {inView && (
-                    <CountUp
-                      from={0}
-                      to={10}
-                      separator=","
-                      duration={3}
-                      className="count-up-text font-semibold text-2xl"
-                    />
-                  )}
-                </div>
+                <CountUp
+                  from={0}
+                  to={10}
+                  separator=","
+                  duration={3}
+                  className="count-up-text font-semibold text-2xl"
+                />
                 <h4 className="font-semibold text-2xl leading-7.5">ETH</h4>
               </div>
               <motion.h4 className="font-semibold text-md leading-5.5">
@@ -180,9 +176,8 @@ const TransactionsSection = () => {
           </div>
           <div className="w-full h-1.5 rounded-full bg-white border border-brown">
             <div
-              className={`w-[${progress.toFixed(
-                0
-              )}%] h-full bg-yellow-400 rounded-full`}
+              className={"h-full bg-yellow-400 rounded-full"}
+              style={{ width: `${progress.toFixed(0)}%` }}
             ></div>
           </div>
           <div className="flex items-center justify-between">
@@ -207,15 +202,13 @@ const TransactionsSection = () => {
             <img src="/Ethereum.webp" width={"70px"} alt="" />
             <div className="self-center mt-2">
               <div ref={ref} className="flex items-center gap-2">
-                {inView && (
-                  <CountUp
-                    from={0}
-                    to={totalRaised}
-                    separator=","
-                    duration={3}
-                    className="count-up-text font-semibold text-4xl leading-7.5"
-                  />
-                )}
+                <CountUp
+                  from={0}
+                  to={totalRaised}
+                  separator=","
+                  duration={3}
+                  className="count-up-text font-semibold text-4xl leading-7.5"
+                />
                 <h4 className="font-semibold text-4xl leading-7.5">ETH</h4>
               </div>
               <h4 className="font-semibold text-lg leading-7.5">

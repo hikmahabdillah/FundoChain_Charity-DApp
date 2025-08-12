@@ -5,6 +5,7 @@ import FooterSection from "../components/sections/FooterSection";
 import HeroSections from "../components/sections/HeroSections";
 import HowItWorksSection from "../components/sections/HowItWorksSection";
 import TransactionsSection from "../components/sections/TransactionsSection";
+import { Toaster } from "react-hot-toast";
 
 const Home = () => {
   return (
@@ -24,6 +25,7 @@ const Home = () => {
         <AboutSection />
         <FooterSection />
         <DonationForm />
+        <Toaster />
       </div>
     </div>
   );

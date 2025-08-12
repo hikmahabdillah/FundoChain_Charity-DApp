@@ -1,16 +1,53 @@
 import React from "react";
 import { useCryptoPrices } from "../hooks/useCryptoPrices";
+import type { DonationFormTypes } from "../types/donationForm";
+import toast from "react-hot-toast";
 
 const DonationForm = () => {
-  const [amount, setAmount] = React.useState<number>(0.0001);
+  const [showModal, setShowModal] = React.useState<boolean>(false);
   const [ethInUSD, setEthInUSD] = React.useState<number>(0);
   const { ethPrice } = useCryptoPrices();
+  const [formData, setFormData] = React.useState<DonationFormTypes>({
+    amount: 0.0001,
+    name: "",
+    message: "",
+    isDisplay: false,
+  });
 
+  // Update the ETH to USD conversion whenever the amount or ETH price changes
   React.useEffect(() => {
     if (!ethPrice) return;
-    const price: number = amount * (ethPrice?.usd ?? 0);
+    const price: number = formData.amount * (ethPrice?.usd ?? 0);
     setEthInUSD(price);
-  }, [amount, ethPrice]);
+  }, [formData.amount, ethPrice]);
+
+  // validate form data before submission
+  const validateFormData = () => {
+    if (formData.amount < 0.0001)
+      return toast.error("Amount less than 0.0001 ETH is not allowed.");
+
+    console.log("Valid Donation Data:", formData);
+    toast.success("Donation data is valid!");
+    return true;
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setFormData({
+      amount: 0.0001,
+      name: "",
+      message: "",
+      isDisplay: false,
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validateFormData()) return;
+    closeModal();
+  };
+
+  // if (!showModal) return null;
 
   return (
     <div
@@ -31,6 +68,7 @@ const DonationForm = () => {
               type="button"
               className="text-[#5C2E00] bg-transparent hover:bg-gray-100 rounded-lg w-8 h-8 flex justify-center items-center"
               data-modal-toggle="crud-modal"
+              onClick={closeModal}
             >
               <svg
                 className="w-3 h-3"
@@ -52,7 +90,7 @@ const DonationForm = () => {
           </div>
 
           {/* Modal body */}
-          <form className="p-5 space-y-4">
+          <form className="p-5 space-y-4" onSubmit={handleSubmit}>
             {/* Amount & Name */}
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -65,20 +103,32 @@ const DonationForm = () => {
                   min={0.0001}
                   step={0.0001}
                   className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                  value={amount}
-                  onChange={(e) => setAmount(parseFloat(e.target.value))}
+                  value={formData.amount}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      amount: parseFloat(e.target.value),
+                    })
+                  }
                 />
                 <p className="text-dark-brown font-medium mt-2">
                   ${ethInUSD.toFixed(2)}
                 </p>
               </div>
               <div>
-                <label className="block mb-2 text-sm font-semibold text-[#5C2E00]">
+                <label className="block mb-2 text-sm font-semibold text-[#5C2E00] text-nowrap">
                   Your Name (optional)
                 </label>
                 <input
                   type="text"
                   placeholder="Aldrin"
+                  value={formData.name}
+                  onChange={(e) => {
+                    setFormData({
+                      ...formData,
+                      name: e.target.value,
+                    });
+                  }}
                   className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                 />
               </div>
@@ -92,6 +142,13 @@ const DonationForm = () => {
               <textarea
                 rows={3}
                 placeholder="Type your message"
+                value={formData.message}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    message: e.target.value,
+                  });
+                }}
                 className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
               ></textarea>
             </div>
@@ -101,6 +158,13 @@ const DonationForm = () => {
               <input
                 id="display-name"
                 type="checkbox"
+                checked={formData.isDisplay}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    isDisplay: e.target.checked,
+                  });
+                }}
                 className="w-4 h-4 rounded border-gray-300 focus:ring-yellow-400 text-yellow-400"
               />
               <label htmlFor="display-name" className="text-sm text-[#5C2E00]">

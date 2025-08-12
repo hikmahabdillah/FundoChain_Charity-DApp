@@ -9,6 +9,9 @@ contract SimpleDonation{
     address donor;
     uint amount;
     uint timestamp;
+    string name;
+    string message;
+    bool isAnonymous;
   }
 
   Donation[] public donations;
@@ -28,7 +31,10 @@ contract SimpleDonation{
     donations.push(Donation({
       donor: msg.sender,
       amount: msg.value,
-      timestamp: block.timestamp
+      timestamp: block.timestamp,
+      name: "",
+      message: "",
+      isAnonymous: false
     }));
     
     emit DonationReceived(msg.sender, msg.value, block.timestamp);
