@@ -6,5 +6,4 @@ export interface ButtonProps {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
   isAnimated?: boolean;
-  showModal?: boolean; // untuk mengontrol visibilitas modal
 }

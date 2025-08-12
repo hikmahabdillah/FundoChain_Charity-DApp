@@ -3,8 +3,13 @@ import { useCryptoPrices } from "../hooks/useCryptoPrices";
 import type { DonationFormTypes } from "../types/donationForm";
 import toast from "react-hot-toast";
 
-const DonationForm = () => {
-  const [showModal, setShowModal] = React.useState<boolean>(false);
+const DonationForm = ({
+  onClose,
+  isOpen,
+}: {
+  onClose: () => void;
+  isOpen: boolean;
+}) => {
   const [ethInUSD, setEthInUSD] = React.useState<number>(0);
   const { ethPrice } = useCryptoPrices();
   const [formData, setFormData] = React.useState<DonationFormTypes>({
@@ -31,8 +36,7 @@ const DonationForm = () => {
     return true;
   };
 
-  const closeModal = () => {
-    setShowModal(false);
+  const resetForm = () => {
     setFormData({
       amount: 0.0001,
       name: "",
@@ -44,7 +48,8 @@ const DonationForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateFormData()) return;
-    closeModal();
+    onClose();
+    resetForm();
   };
 
   // if (!showModal) return null;
@@ -53,10 +58,16 @@ const DonationForm = () => {
     <div
       id="crud-modal"
       tabIndex={-1}
-      aria-hidden="true"
-      className="min-h-screen hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-cream/25 bg-opacity-50"
+      // aria-hidden={!isOpen}
+      className={`min-h-screen overflow-hidden fixed top-0 right-0 left-0 z-40 
+        justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full 
+        bg-cream/25 bg-opacity-50 ${isOpen ? "flex" : "hidden"}`}
+      onClick={onClose}
     >
-      <div className="relative p-4 w-full max-w-md">
+      <div
+        className="relative p-4 w-full max-w-md"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Modal content */}
         <div className="relative bg-white rounded-2xl shadow-sm">
           {/* Modal header */}
@@ -67,8 +78,7 @@ const DonationForm = () => {
             <button
               type="button"
               className="text-[#5C2E00] bg-transparent hover:bg-gray-100 rounded-lg w-8 h-8 flex justify-center items-center"
-              data-modal-toggle="crud-modal"
-              onClick={closeModal}
+              onClick={onClose}
             >
               <svg
                 className="w-3 h-3"
@@ -100,7 +110,6 @@ const DonationForm = () => {
                 <input
                   type="number"
                   placeholder="0,0001"
-                  min={0.0001}
                   step={0.0001}
                   className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                   value={formData.amount}

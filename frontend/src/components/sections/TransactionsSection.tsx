@@ -6,6 +6,7 @@ import CountUp from "../CountUp";
 import { useInView } from "react-intersection-observer";
 import { useCryptoPrices, useGetPriceInUSD } from "../../hooks/useCryptoPrices";
 import { data } from "../../data/dummy";
+import DonationForm from "../DonationForm";
 
 type CardProps = {
   className?: string;
@@ -30,6 +31,8 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
 );
 
 const TransactionsSection = () => {
+  const [showModal, setShowModal] = React.useState<boolean>(false);
+
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0,
@@ -169,8 +172,7 @@ const TransactionsSection = () => {
                 <h4 className="font-semibold text-2xl leading-7.5">ETH</h4>
               </div>
               <motion.h4 className="font-semibold text-md leading-5.5">
-                {loading && <div>Loading...</div>}
-                {goalsPrice}
+                {loading ? <div>Loading...</div> : goalsPrice}
               </motion.h4>
             </div>
           </div>
@@ -307,9 +309,12 @@ const TransactionsSection = () => {
           text="Donate Now"
           icon={<img src="/Donate.webp" width={"30px"} alt="Love Icon" />}
           className="bg-brown text-md font-semibold hover:bg-yellow text-dark-brown !rounded-full"
-          showModal={true}
+          onClick={() => setShowModal(true)}
         />
       </div>
+      {showModal && (
+        <DonationForm isOpen={showModal} onClose={() => setShowModal(false)} />
+      )}
     </section>
   );
 };
