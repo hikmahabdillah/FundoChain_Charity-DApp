@@ -4,12 +4,13 @@ pragma solidity ^0.8.28;
 contract SimpleDonation{
   address public immutable owner; // address dari pemilik kontrak yang tidak dapat diubah
   uint public totalDonations;
+  uint public goalAmount = 15;
 
   struct Donation{
     address donor;
     uint amount;
     uint timestamp;
-    string name;
+    string name; 
     string message;
     bool isAnonymous;
   }
@@ -24,25 +25,45 @@ contract SimpleDonation{
   }
 
   // function untuk menerima donasi
-  function donate() public payable{
-    require(msg.value > 0, "Donation must be greather than 0");
+  function donate(string memory _name, string memory _message, bool _isAnonymous) public payable {
+    require(msg.value > 0, "Donation must be greater than 0");
     totalDonations += msg.value;
 
     donations.push(Donation({
-      donor: msg.sender,
-      amount: msg.value,
-      timestamp: block.timestamp,
-      name: "",
-      message: "",
-      isAnonymous: false
+        donor: msg.sender,
+        amount: msg.value,
+        timestamp: block.timestamp,
+        name: _isAnonymous ? "" : _name,
+        message: _isAnonymous ? "" : _message,
+        isAnonymous: _isAnonymous
     }));
-    
+
     emit DonationReceived(msg.sender, msg.value, block.timestamp);
+  }
+
+  // function untuk riowayat donasi per address
+  function getDonationsByAddress(address _donor) public view returns (Donation[] memory) {
+    uint count = 0;
+    for (uint i = 0; i < donations.length; i++) {
+      if (donations[i].donor == _donor) {
+        count++;
+      }
+    }
+
+    Donation[] memory result = new Donation[](count);
+    uint index = 0;
+    for (uint i = 0; i < donations.length; i++) {
+      if (donations[i].donor == _donor) {
+        result[index] = donations[i];
+        index++;
+      }
+    }
+    return result;
   }
 
   // function fallback jika ada ether yang dikirim langsung ke kontrak
   receive() external payable {
-    donate();
+    donate("Anonymous", "No message", true);
   }
 
   // function untuk menarik dana oleh owner kontrak
@@ -60,7 +81,7 @@ contract SimpleDonation{
   }
 
   // function untuk mendapatkan daftar donasi
-  function getDonations() public view returns(Donation[] memory) {
+  function getDonationsList() public view returns(Donation[] memory) {
     return donations;
   }
 

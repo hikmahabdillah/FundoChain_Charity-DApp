@@ -56,7 +56,7 @@ const TransactionsSection = () => {
     name: item.namaDonatur,
   }));
 
-  const totalDonaturs = datas.length;
+  const totalDonaturs = datas.map((item) => item.address).length;
 
   const totalRaised = datas.reduce(
     (acc, transaction) => acc + (transaction.amount ?? 0),
