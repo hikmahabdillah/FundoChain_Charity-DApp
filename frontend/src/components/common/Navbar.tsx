@@ -2,6 +2,7 @@ import React from "react";
 import Button from "./Button";
 import type { NavItem } from "../../types/navmenu";
 import { motion } from "motion/react";
+import { useEthers } from "../../hooks/useEthers";
 
 const navItems: NavItem[] = [
   { label: "Home", href: "#hero" },
@@ -12,6 +13,7 @@ const navItems: NavItem[] = [
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const { account, connectWallet } = useEthers();
 
   return (
     <motion.header
@@ -72,12 +74,25 @@ const Navbar: React.FC = () => {
 
         {/* Connect Wallet Button - desktop */}
         <div className="hidden md:block">
-          <Button
-            type="button"
-            text="Connect Wallet"
-            className="bg-gradient-to-r from-yellow to-red text-sm font-semibold text-white !py-2.5"
-            onClick={() => alert("Clicked")}
-          />
+          {!account && (
+            <Button
+              type="button"
+              text="Connect Wallet"
+              className="bg-gradient-to-r from-yellow to-red text-sm font-semibold text-white !py-2.5"
+              onClick={connectWallet}
+            />
+          )}
+          {account && (
+            <Button
+              type="button"
+              text={account}
+              icon={
+                <img src="/User.png" alt="Wallet Icon" className="w-4 h-4" />
+              }
+              className="rounded-xl border-2 shadow-sm border-dark-brown/10 text-sm font-semibold text-yellow !py-2.5"
+              onClick={connectWallet}
+            />
+          )}
         </div>
       </nav>
 
@@ -97,15 +112,29 @@ const Navbar: React.FC = () => {
               </li>
             ))}
             <li>
-              <Button
-                type="button"
-                text="Connect Wallet"
-                className="w-full bg-gradient-to-r from-yellow to-red text-sm font-semibold text-white !py-2.5"
-                onClick={() => {
-                  alert("Clicked");
-                  setIsOpen(false);
-                }}
-              />
+              {!account && (
+                <Button
+                  type="button"
+                  text="Connect Wallet"
+                  className="w-full bg-gradient-to-r from-yellow to-red text-sm font-semibold text-white !py-2.5"
+                  onClick={connectWallet}
+                />
+              )}
+              {account && (
+                <Button
+                  type="button"
+                  text={account}
+                  icon={
+                    <img
+                      src="/User.png"
+                      alt="Wallet Icon"
+                      className="w-4 h-4"
+                    />
+                  }
+                  className="w-full rounded-lg border-2 shadow-sm border-dark-brown/10 text-sm font-semibold text-yellow !py-2.5"
+                  onClick={connectWallet}
+                />
+              )}
             </li>
           </ul>
         </div>

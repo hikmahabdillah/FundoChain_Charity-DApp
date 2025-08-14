@@ -2,6 +2,7 @@ import React from "react";
 import { useCryptoPrices } from "../hooks/useCryptoPrices";
 import type { DonationFormTypes } from "../types/donationForm";
 import toast from "react-hot-toast";
+import { useEthers } from "../hooks/useEthers";
 
 const DonationForm = ({
   onClose,
@@ -12,7 +13,7 @@ const DonationForm = ({
 }) => {
   const [ethInUSD, setEthInUSD] = React.useState<number>(0);
   const { ethPrice } = useCryptoPrices();
-  const [showConfirm, setShowConfirm] = React.useState(false);
+  const [showConfirm, setShowConfirm] = React.useState<boolean>(false);
 
   const [formData, setFormData] = React.useState<DonationFormTypes>({
     amount: 0.001,
