@@ -17,7 +17,7 @@ const Button: React.FC<ButtonProps> = ({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`flex items-center justify-center py-2 px-5 gap-2 rounded-lg transition duration-200 
+      className={`flex items-center justify-center py-2 px-5 gap-2 rounded-lg transition duration-200 cursor-pointer 
         ${disabled ? "opacity-50 cursor-not-allowed" : ""} 
         ${className}`}
       {...(isAnimated

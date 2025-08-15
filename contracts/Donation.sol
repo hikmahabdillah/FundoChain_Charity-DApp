@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.28;
 
-contract SimpleDonation{
+contract DonationContract{
   address public immutable owner; // address dari pemilik kontrak yang tidak dapat diubah
   uint public totalDonations;
   uint public goalAmount = 15;
