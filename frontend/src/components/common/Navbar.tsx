@@ -78,7 +78,7 @@ const Navbar: React.FC = () => {
             <Button
               type="button"
               text="Connect Wallet"
-              className="bg-gradient-to-r from-yellow to-red text-sm font-semibold text-white !py-2.5"
+              className="bg-gradient-to-r from-yellow to-red text-sm font-semibold text-white !py-2.5 transition-all duration-300 hover:scale-95"
               onClick={connectWallet}
             />
           )}
@@ -89,7 +89,7 @@ const Navbar: React.FC = () => {
               icon={
                 <img src="/User.png" alt="Wallet Icon" className="w-4 h-4" />
               }
-              className="rounded-xl border-2 shadow-sm border-dark-brown/10 text-sm font-semibold text-yellow !py-2.5"
+              className="rounded-xl border-2 shadow-sm border-dark-brown/10 text-sm font-semibold text-yellow !py-2.5 transition-all duration-300 hover:scale-95"
               onClick={connectWallet}
             />
           )}
@@ -116,7 +116,7 @@ const Navbar: React.FC = () => {
                 <Button
                   type="button"
                   text="Connect Wallet"
-                  className="w-full bg-gradient-to-r from-yellow to-red text-sm font-semibold text-white !py-2.5"
+                  className="w-full bg-gradient-to-r from-yellow to-red text-sm font-semibold text-white !py-2.5 transition-all duration-300 hover:scale-95"
                   onClick={connectWallet}
                 />
               )}
@@ -131,7 +131,7 @@ const Navbar: React.FC = () => {
                       className="w-4 h-4"
                     />
                   }
-                  className="w-full rounded-lg border-2 shadow-sm border-dark-brown/10 text-sm font-semibold text-yellow !py-2.5"
+                  className="w-full rounded-lg border-2 shadow-sm border-dark-brown/10 text-sm font-semibold text-yellow !py-2.5 transition-all duration-300 hover:scale-95"
                   onClick={connectWallet}
                 />
               )}

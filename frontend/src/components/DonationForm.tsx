@@ -2,7 +2,6 @@ import React from "react";
 import { useCryptoPrices } from "../hooks/useCryptoPrices";
 import type { DonationFormTypes } from "../types/donationForm";
 import toast from "react-hot-toast";
-import { useEthers } from "../hooks/useEthers";
 
 const DonationForm = ({
   onClose,
