@@ -4,8 +4,8 @@ pragma solidity ^0.8.28;
 contract DonationContract{
   address public immutable owner; // address dari pemilik kontrak yang tidak dapat diubah
   uint public totalDonations;
-  uint public goalAmount = 15;
-
+  uint public goalAmount = 2 ether; // target donasi yang ingin dicapai
+  
   struct Donation{
     address donor;
     uint amount;
@@ -34,7 +34,7 @@ contract DonationContract{
         amount: msg.value,
         timestamp: block.timestamp,
         name: _isAnonymous ? "" : _name,
-        message: _isAnonymous ? "" : _message,
+        message: _message,
         isAnonymous: _isAnonymous
     }));
 
