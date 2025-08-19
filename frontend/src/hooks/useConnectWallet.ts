@@ -7,7 +7,7 @@ declare global {
   }
 }
 
-export const useEthers = () => {
+export const useConnectWallet = () => {
   const [provider, setProvider] = React.useState<ethers.BrowserProvider | null>(
     null
   );

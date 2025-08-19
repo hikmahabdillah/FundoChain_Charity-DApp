@@ -7,6 +7,7 @@ import { useInView } from "react-intersection-observer";
 import { useCryptoPrices, useGetPriceInUSD } from "../../hooks/useCryptoPrices";
 import { data } from "../../data/dummy";
 import DonationForm from "../DonationForm";
+import { useDonationListener } from "../../hooks/useDonationListener";
 
 type CardProps = {
   className?: string;
@@ -32,6 +33,9 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
 
 const TransactionsSection = () => {
   const [showModal, setShowModal] = React.useState<boolean>(false);
+  const { donations, goal } = useDonationListener();
+  console.log("goal", goal);
+  console.log("donations", donations);
 
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -39,8 +43,8 @@ const TransactionsSection = () => {
   });
 
   function shortenAddress(address: string): string {
-    const start = address.slice(0, 5); // ambil 10 karakter pertama
-    const end = address.slice(-4); // ambil 8 karakter terakhir
+    const start = address.slice(0, 5);
+    const end = address.slice(-4);
     return `${start}......${end}`;
   }
 

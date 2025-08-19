@@ -2,7 +2,7 @@ import React from "react";
 import Button from "./Button";
 import type { NavItem } from "../../types/navmenu";
 import { motion } from "motion/react";
-import { useEthers } from "../../hooks/useEthers";
+import { useConnectWallet } from "../../hooks/useConnectWallet";
 
 const navItems: NavItem[] = [
   { label: "Home", href: "#hero" },
@@ -13,7 +13,7 @@ const navItems: NavItem[] = [
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
-  const { account, connectWallet } = useEthers();
+  const { account, connectWallet } = useConnectWallet();
 
   return (
     <motion.header

@@ -1,4 +1,4 @@
-export interface Donation {
+export interface DonationTypes {
   id: number;
   address: string;
   namaDonatur?: string;

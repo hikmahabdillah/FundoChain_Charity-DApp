@@ -73,7 +73,7 @@ const DonationForm = ({
       >
         <div
           className="relative p-4 w-full max-w-md"
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()} // Prevent click from closing modal
         >
           {/* Modal content */}
           <div className="relative bg-white rounded-2xl shadow-sm">
