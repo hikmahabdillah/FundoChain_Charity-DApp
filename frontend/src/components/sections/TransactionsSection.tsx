@@ -34,6 +34,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
 const TransactionsSection = () => {
   const [showModal, setShowModal] = React.useState<boolean>(false);
   const { donations, goal } = useDonationListener();
+  const goalsEth = goal ?? 0;
   console.log("goal", goal);
   console.log("donations", donations);
 
@@ -48,7 +49,7 @@ const TransactionsSection = () => {
     return `${start}......${end}`;
   }
 
-  const datas = data;
+  const datas = donations;
   const transactions = datas.sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
@@ -68,7 +69,6 @@ const TransactionsSection = () => {
   );
 
   const { ethPrice, loading, error } = useCryptoPrices();
-  const goalsEth = 15; // 15 eth
   const goalsPrice = useGetPriceInUSD(goalsEth, ethPrice?.usd ?? 0); // 15 eth
   const raisedPrice = useGetPriceInUSD(totalRaised, ethPrice?.usd ?? 0); //10 eth
 
@@ -168,7 +168,7 @@ const TransactionsSection = () => {
               <div className="flex items-center gap-1">
                 <CountUp
                   from={0}
-                  to={10}
+                  to={goalsEth}
                   separator=","
                   duration={3}
                   className="count-up-text font-semibold text-2xl"

@@ -28,7 +28,6 @@ export const useDonationListener = () => {
       contract.removeAllListeners("DonationReceived");
 
       const onDonationReceived = (
-        id: number,
         address: string,
         namaDonatur: string,
         message: string,
@@ -37,7 +36,6 @@ export const useDonationListener = () => {
         createdAt: ethers.BigNumberish
       ) => {
         const newDonation: DonationTypes = {
-          id,
           address,
           namaDonatur,
           message,

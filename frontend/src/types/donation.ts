@@ -1,5 +1,4 @@
 export interface DonationTypes {
-  id: number;
   address: string;
   namaDonatur?: string;
   message?: string;

@@ -6,8 +6,11 @@ import { useEffect, useState } from "react";
 import abi from "../contracts/abi/Donation.json";
 
 type ContractABi = ethers.Interface | ethers.InterfaceAbi;
+type ContractAddress = {
+  [chainId: string]: string | undefined;
+};
 
-const addresses: { [chainId: string]: string | undefined } = {
+const addresses: ContractAddress = {
   "31337": import.meta.env.VITE_CONTRACT_ADDRESS_LOCAL,
   "11155111": import.meta.env.VITE_CONTRACT_ADDRESS_SEPOLIA,
 };
@@ -52,6 +55,7 @@ export const useContract = () => {
     };
 
     getContractInstance();
+    console.log("Contract initialized:", contract);
   }, [provider, account]);
 
   return { contract };

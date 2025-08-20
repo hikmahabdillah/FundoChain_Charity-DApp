@@ -26,7 +26,7 @@ contract DonationContract{
 
   // function untuk menerima donasi
   function donate(string memory _name, string memory _message, bool _isAnonymous) public payable {
-    require(msg.value > 0.001 ether, "Donation must be greater than 0.001 ether");
+    require(msg.value >= 0.001 ether, "Donation must be greater than 0.001 ether");
     totalDonations += msg.value;
 
     // donations.push(Donation({

@@ -2,6 +2,7 @@ import React from "react";
 import { useCryptoPrices } from "../hooks/useCryptoPrices";
 import type { DonationFormTypes } from "../types/donationForm";
 import toast from "react-hot-toast";
+import { useDonate } from "../hooks/useDonate";
 
 const DonationForm = ({
   onClose,
@@ -21,6 +22,8 @@ const DonationForm = ({
     isDisplay: false,
   });
 
+  const { donate, isLoading, error } = useDonate();
+
   // Update the ETH to USD conversion whenever the amount or ETH price changes
   React.useEffect(() => {
     if (!ethPrice) return;
@@ -30,10 +33,13 @@ const DonationForm = ({
 
   // validate form data before submission
   const validateFormData = () => {
-    if (formData.amount < 0.001)
-      return toast.error(
+    if (formData.amount < 0.001) {
+      toast.error(
         "Minimum donation is 0.001 ETH to ensure smooth transactions."
       );
+      return false;
+    }
+
     return true;
   };
 
@@ -53,11 +59,14 @@ const DonationForm = ({
   };
 
   const confirmDonation = () => {
-    console.log("Valid Donation Data:", formData);
-    toast.success("Donation successful! Thank you for your support ✨");
-    setShowConfirm(false);
-    onClose();
-    resetForm();
+    console.log(typeof formData.amount);
+    donate(formData);
+    if (!isLoading) {
+      toast.success("Donation successful! Thank you for your support ✨");
+      setShowConfirm(false);
+      onClose();
+      resetForm();
+    }
   };
 
   return (
@@ -206,7 +215,7 @@ const DonationForm = ({
       {/* Confirmation Popup */}
       {showConfirm && (
         <div
-          className="fixed bg-black/50 inset-0 flex items-start pt-10 justify-center z-50"
+          className="fixed bg-black/50 inset-0 flex items-start pt-10 justify-center z-50 p-3"
           onClick={() => setShowConfirm(false)}
         >
           <div
