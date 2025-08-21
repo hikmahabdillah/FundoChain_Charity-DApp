@@ -13,6 +13,7 @@ export const useDonationListener = () => {
     const fetchGoalAmount = async () => {
       if (contract) {
         try {
+          console.log(ethers.formatEther(await contract.totalDonations()));
           const goalAmount = await contract.goalAmount();
           setGoal(parseFloat(ethers.formatEther(goalAmount)));
         } catch (error) {
@@ -20,7 +21,6 @@ export const useDonationListener = () => {
         }
       }
     };
-
     fetchGoalAmount();
 
     // Pasang listener untuk donasi baru

@@ -6,16 +6,16 @@ contract DonationContract{
   uint public totalDonations;
   uint public goalAmount = 2 ether; // target donasi yang ingin dicapai
   
-  // struct Donation{
-  //   address donor;
-  //   uint amount;
-  //   uint timestamp;
-  //   string name; 
-  //   string message;
-  //   bool isAnonymous;
-  // }
+  struct Donation{
+    address donor;
+    uint amount;
+    uint timestamp;
+    string name; 
+    string message;
+    bool isAnonymous;
+  }
 
-  // Donation[] public donations;
+  Donation[] private donations;
 
   event DonationReceived(address indexed donor, uint amount, uint timestamp, string name, string message, bool isAnonymous);
   event FundsWithdrawn(address indexed owner, uint amount, uint timestamp);
@@ -29,14 +29,14 @@ contract DonationContract{
     require(msg.value >= 0.001 ether, "Donation must be greater than 0.001 ether");
     totalDonations += msg.value;
 
-    // donations.push(Donation({
-    //     donor: msg.sender,
-    //     amount: msg.value,
-    //     timestamp: block.timestamp,
-    //     name: _isAnonymous ? "" : _name,
-    //     message: _message,
-    //     isAnonymous: _isAnonymous
-    // }));
+    donations.push(Donation({
+        donor: msg.sender,
+        amount: msg.value,
+        timestamp: block.timestamp,
+        name: _isAnonymous ? "" : _name,
+        message: _message,
+        isAnonymous: _isAnonymous
+    }));
     
     emit DonationReceived(msg.sender, msg.value, block.timestamp, _isAnonymous ? "" : _name, _message, _isAnonymous);
   }
@@ -54,6 +54,26 @@ contract DonationContract{
     payable(owner).transfer(_amount);
     emit FundsWithdrawn(owner, _amount, block.timestamp);
   }
+
+  // function untuk riowayat donasi per address
+  function getDonationsByAddress(address _donor) public view returns (Donation[] memory) {
+    uint count = 0;
+    for (uint i = 0; i < donations.length; i++) {
+      if (donations[i].donor == _donor) {
+        count++;
+      }
+    }
+
+    Donation[] memory result = new Donation[](count);
+    uint index = 0;
+    for (uint i = 0; i < donations.length; i++) {
+      if (donations[i].donor == _donor) {
+        result[index] = donations[i];
+        index++;
+      }
+    }
+    return result;
+  }
   
   // funtion menampilkan jumlah donasi yang diterima
   function getTotalDonations() public view returns (uint) {
@@ -61,9 +81,9 @@ contract DonationContract{
   }
 
   // function untuk mendapatkan daftar donasi
-  // function getDonationsList() public view returns(Donation[] memory) {
-  //   return donations;
-  // }
+  function getDonationsList() public view returns(Donation[] memory) {
+    return donations;
+  }
 
   // function untuk mengetahui jumlaah saldo saat ini di smart contract
   function getBalance() public view returns(uint){
