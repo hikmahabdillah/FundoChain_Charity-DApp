@@ -5,7 +5,6 @@ import { motion } from "motion/react";
 import CountUp from "../CountUp";
 import { useInView } from "react-intersection-observer";
 import { useCryptoPrices, useGetPriceInUSD } from "../../hooks/useCryptoPrices";
-import { data } from "../../data/dummy";
 import DonationForm from "../DonationForm";
 import { useDonationListener } from "../../hooks/useDonationListener";
 
@@ -58,7 +57,7 @@ const TransactionsSection = () => {
     amount: item.amount,
     from: shortenAddress(item.address),
     isDisplay: item.isDisplay,
-    name: item.namaDonatur,
+    name: item.donorName,
   }));
 
   const totalDonaturs = datas.map((item) => item.address).length;
@@ -67,6 +66,7 @@ const TransactionsSection = () => {
     (acc, transaction) => acc + (transaction.amount ?? 0),
     0
   );
+  console.log("totalRaised", totalRaised);
 
   const { ethPrice, loading, error } = useCryptoPrices();
   const goalsPrice = useGetPriceInUSD(goalsEth, ethPrice?.usd ?? 0); // 15 eth

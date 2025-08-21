@@ -59,7 +59,7 @@ const DonationForm = ({
   };
 
   const confirmDonation = () => {
-    console.log(typeof formData.amount);
+    console.log("Confirming donation with data:", formData);
     donate(formData);
     if (!isLoading) {
       toast.success("Donation successful! Thank you for your support ✨");

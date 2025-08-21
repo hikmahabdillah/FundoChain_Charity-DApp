@@ -1,6 +1,6 @@
 export interface DonationTypes {
   address: string;
-  namaDonatur?: string;
+  donorName?: string;
   message?: string;
   isDisplay: boolean;
   amount: number;

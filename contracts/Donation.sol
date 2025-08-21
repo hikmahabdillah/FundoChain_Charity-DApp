@@ -33,12 +33,12 @@ contract DonationContract{
         donor: msg.sender,
         amount: msg.value,
         timestamp: block.timestamp,
-        name: _isAnonymous ? "" : _name,
+        name: _name,
         message: _message,
         isAnonymous: _isAnonymous
     }));
     
-    emit DonationReceived(msg.sender, msg.value, block.timestamp, _isAnonymous ? "" : _name, _message, _isAnonymous);
+    emit DonationReceived(msg.sender, msg.value, block.timestamp, _name, _message, _isAnonymous);
   }
 
   // function fallback jika ada ether yang dikirim langsung ke kontrak
