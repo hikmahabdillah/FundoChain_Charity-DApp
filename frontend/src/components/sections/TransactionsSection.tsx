@@ -34,7 +34,12 @@ const TransactionsSection = () => {
   const [showModal, setShowModal] = React.useState<boolean>(false);
   const { donations, goal } = useDonationListener();
   const goalsEth = goal ?? 0;
-  console.log("goal", goal);
+  const uniqueAddresses = new Set();
+  donations.forEach((donation) => {
+    uniqueAddresses.add(donation.address);
+  });
+  const totalDonaturs = uniqueAddresses.size;
+
   console.log("donations", donations);
 
   const { ref, inView } = useInView({
@@ -60,13 +65,11 @@ const TransactionsSection = () => {
     name: item.donorName,
   }));
 
-  const totalDonaturs = datas.map((item) => item.address).length;
-
   const totalRaised = datas.reduce(
     (acc, transaction) => acc + (transaction.amount ?? 0),
     0
   );
-  console.log("totalRaised", totalRaised);
+  const formatTotalRaised = parseFloat(totalRaised.toFixed(3));
 
   const { ethPrice, loading, error } = useCryptoPrices();
   const goalsPrice = useGetPriceInUSD(goalsEth, ethPrice?.usd ?? 0);
@@ -210,7 +213,7 @@ const TransactionsSection = () => {
               <div ref={ref} className="flex items-center gap-2">
                 <CountUp
                   from={0}
-                  to={totalRaised}
+                  to={formatTotalRaised}
                   separator=","
                   duration={3}
                   className="count-up-text font-semibold text-4xl leading-7.5"
