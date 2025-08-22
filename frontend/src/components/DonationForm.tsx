@@ -3,6 +3,7 @@ import { useCryptoPrices } from "../hooks/useCryptoPrices";
 import type { DonationFormTypes } from "../types/donationForm";
 import toast from "react-hot-toast";
 import { useDonate } from "../hooks/useDonate";
+import Loading from "./common/Loading";
 
 const DonationForm = ({
   onClose,
@@ -31,6 +32,23 @@ const DonationForm = ({
     setEthInUSD(price);
   }, [formData.amount, ethPrice]);
 
+  // manage feedback ui based on state changes 'isLoading' and 'error'
+  React.useEffect(() => {
+    if (!isLoading && error) {
+      toast.error(error);
+      setShowConfirm(false);
+    }
+
+    if (!isLoading && !error) {
+      if (showConfirm) {
+        toast.success("Donation successful! Thank you for your support ✨");
+        onClose();
+        resetForm();
+        setShowConfirm(false);
+      }
+    }
+  }, [isLoading, error]);
+
   // validate form data before submission
   const validateFormData = () => {
     if (formData.amount < 0.001) {
@@ -58,15 +76,8 @@ const DonationForm = ({
     setShowConfirm(true);
   };
 
-  const confirmDonation = () => {
-    console.log("Confirming donation with data:", formData);
-    donate(formData);
-    if (!isLoading) {
-      toast.success("Donation successful! Thank you for your support ✨");
-      setShowConfirm(false);
-      onClose();
-      resetForm();
-    }
+  const confirmDonation = async () => {
+    await donate(formData);
   };
 
   return (
@@ -215,39 +226,43 @@ const DonationForm = ({
       {/* Confirmation Popup */}
       {showConfirm && (
         <div
-          className="fixed bg-black/50 inset-0 flex items-start pt-10 justify-center z-50 p-3"
+          className="fixed bg-black/70 inset-0 flex items-center pt-10 justify-center z-50 p-3"
           onClick={() => setShowConfirm(false)}
         >
-          <div
-            className="bg-white rounded-xl shadow-lg max-w-sm w-full p-6"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h3 className="text-lg font-bold text-[#5C2E00] mb-4">
-              Confirm Your Donation
-            </h3>
-            <p className="mb-2">
-              Amount: <strong>{formData.amount} ETH</strong> (~$
-              {ethInUSD.toFixed(2)})
-            </p>
-            <p className="mb-4 text-sm text-gray-600">
-              This transaction cannot be undone. Please confirm your details
-              before proceeding.
-            </p>
-            <div className="flex justify-end gap-3">
-              <button
-                className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100"
-                onClick={() => setShowConfirm(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="px-4 py-2 rounded-lg bg-yellow-400 hover:bg-yellow-500 text-[#5C2E00] font-semibold"
-                onClick={confirmDonation}
-              >
-                Confirm & Donate
-              </button>
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <div
+              className="bg-white rounded-xl shadow-lg max-w-sm w-full p-6"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h3 className="text-lg font-bold text-[#5C2E00] mb-4">
+                Confirm Your Donation
+              </h3>
+              <p className="mb-2">
+                Amount: <strong>{formData.amount} ETH</strong> (~$
+                {ethInUSD.toFixed(2)})
+              </p>
+              <p className="mb-4 text-sm text-gray-600">
+                This transaction cannot be undone. Please confirm your details
+                before proceeding.
+              </p>
+              <div className="flex justify-end gap-3">
+                <button
+                  className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100"
+                  onClick={() => setShowConfirm(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="px-4 py-2 rounded-lg bg-yellow-400 hover:bg-yellow-500 text-[#5C2E00] font-semibold"
+                  onClick={confirmDonation}
+                >
+                  Confirm & Donate
+                </button>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       )}
     </>

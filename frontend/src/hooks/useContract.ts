@@ -55,7 +55,6 @@ export const useContract = () => {
     };
 
     getContractInstance();
-    console.log("Contract initialized:", contract);
   }, [provider, account]);
 
   return { contract };

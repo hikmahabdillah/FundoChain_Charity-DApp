@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { useContract } from "./useContract";
 import type { DonationFormTypes } from "../types/donationForm";
@@ -16,10 +16,8 @@ export const useDonate = () => {
 
     setIsLoading(true);
     setError(null);
-
     try {
       const donationAmount = ethers.parseEther(formData.amount.toString());
-
       const tx = await contract.donate(
         formData.name,
         formData.message,
@@ -27,10 +25,12 @@ export const useDonate = () => {
         { value: donationAmount }
       );
       await tx.wait();
-      console.log("Donation successful:", tx);
-    } catch (err) {
-      console.error("Donation failed:", err);
-      setError("Failed to process donation. Please try again.");
+    } catch (err: any) {
+      if (err.info.error.code === 4001) {
+        setError("Transaction was cancelled");
+      } else {
+        setError("Failed to process donation. Please try again.");
+      }
     } finally {
       setIsLoading(false);
     }

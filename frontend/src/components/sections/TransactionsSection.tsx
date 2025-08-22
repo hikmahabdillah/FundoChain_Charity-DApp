@@ -69,8 +69,8 @@ const TransactionsSection = () => {
   console.log("totalRaised", totalRaised);
 
   const { ethPrice, loading, error } = useCryptoPrices();
-  const goalsPrice = useGetPriceInUSD(goalsEth, ethPrice?.usd ?? 0); // 15 eth
-  const raisedPrice = useGetPriceInUSD(totalRaised, ethPrice?.usd ?? 0); //10 eth
+  const goalsPrice = useGetPriceInUSD(goalsEth, ethPrice?.usd ?? 0);
+  const raisedPrice = useGetPriceInUSD(totalRaised, ethPrice?.usd ?? 0);
 
   const progress = (totalRaised / goalsEth) * 100;
   if (error) return <div>Error: {error}</div>;
@@ -241,17 +241,21 @@ const TransactionsSection = () => {
               <div className="w-full h-0.75 bg-light-yellow"></div>
             </div>
             <div className="flex flex-col gap-1">
-              {latestDonations.map((donation, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between font-medium text-white"
-                >
-                  <li>{donation.amount} ETH</li>
-                  <p>
-                    from {donation?.isDisplay ? donation.name : donation.from}
-                  </p>
-                </div>
-              ))}
+              {latestDonations.length > 0 ? (
+                latestDonations.map((donation, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between font-medium text-white"
+                  >
+                    <li>{donation.amount} ETH</li>
+                    <p>
+                      from {donation?.isDisplay ? donation.name : donation.from}
+                    </p>
+                  </div>
+                ))
+              ) : (
+                <p className="text-white text-center">No donations yet</p>
+              )}
               <Link
                 to={"/transactions-log"}
                 className="font-medium underline text-light-yellow self-end mt-3"
