@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "./Button";
 import type { NavItem } from "../../types/navmenu";
 import { motion } from "motion/react";
 import { useConnectWallet } from "../../hooks/useConnectWallet";
+import { FaEthereum, FaClock, FaWallet } from "react-icons/fa";
+import { useUserData } from "../../hooks/useUserData";
 
 const navItems: NavItem[] = [
   { label: "Home", href: "#hero" },
@@ -13,7 +15,17 @@ const navItems: NavItem[] = [
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
-  const { account, connectWallet } = useConnectWallet();
+  const [isUserMenuOpen, setIsUserMenuOpen] = React.useState<boolean>(false);
+  const { account, formatAccount, connectWallet } = useConnectWallet();
+  const { balance, fetchBalance } = useUserData();
+
+  useEffect(() => {
+    fetchBalance(account || "");
+  }, [fetchBalance]);
+
+  const toggleUserMenu = () => {
+    setIsUserMenuOpen(!isUserMenuOpen);
+  };
 
   return (
     <motion.header
@@ -85,15 +97,49 @@ const Navbar: React.FC = () => {
           {account && (
             <Button
               type="button"
-              text={account}
+              text={formatAccount(account)}
               icon={
                 <img src="/User.png" alt="Wallet Icon" className="w-4 h-4" />
               }
               className="rounded-xl border-2 shadow-sm border-dark-brown/10 text-sm font-semibold text-yellow !py-2.5 transition-all duration-300 hover:scale-95"
-              onClick={connectWallet}
+              onClick={toggleUserMenu}
             />
           )}
         </div>
+        {account && isUserMenuOpen && (
+          <div
+            className="absolute top-16 right-6 z-50 my-4 text-base list-none bg-amber-50 divide-y divide-orange-100 rounded-lg shadow-sm"
+            id="user-dropdown"
+          >
+            <ul className="py-2" aria-labelledby="user-menu-button">
+              <li>
+                <a
+                  href="#"
+                  className="flex items-center gap-2 px-4 py-2 text-sm text-yellow-900 hover:bg-orange-100"
+                >
+                  <FaEthereum size={20} /> {balance} ETH
+                </a>
+              </li>
+              <hr className="text-cream/20 mx-2 h-1" />
+              <li>
+                <a
+                  href="#"
+                  className="flex items-center gap-2 px-4 py-2 text-sm text-yellow-900 hover:bg-orange-100"
+                >
+                  <FaClock /> Transaction History
+                </a>
+              </li>
+              <li>
+                <button
+                  // onClick={onDisconnect}
+                  className="w-full text-left flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-100"
+                >
+                  <FaWallet /> Disconnect Wallet
+                </button>
+              </li>
+            </ul>
+          </div>
+        )}
       </nav>
 
       {/* Mobile Menu */}
@@ -123,7 +169,7 @@ const Navbar: React.FC = () => {
               {account && (
                 <Button
                   type="button"
-                  text={account}
+                  text={formatAccount(account)}
                   icon={
                     <img
                       src="/User.png"
@@ -132,7 +178,6 @@ const Navbar: React.FC = () => {
                     />
                   }
                   className="w-full rounded-lg border-2 shadow-sm border-dark-brown/10 text-sm font-semibold text-yellow !py-2.5 transition-all duration-300 hover:scale-95"
-                  onClick={connectWallet}
                 />
               )}
             </li>

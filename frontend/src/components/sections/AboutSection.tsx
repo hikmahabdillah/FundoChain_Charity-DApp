@@ -5,7 +5,7 @@ const AboutSection = () => {
     <section id="about" className="py-20 w-full p-5 sm:ps-18 overflow-hidden">
       <div className="flex items-center gap-5">
         <motion.h2
-          className="font-semibold text-4xl md:text-5xl  text-center text-dark-brown text-nowrap"
+          className="font-semibold text-4xl md:text-5xl text-center text-dark-brown text-nowrap"
           initial={{ opacity: 0 }}
           whileInView={{
             opacity: 1,
@@ -63,10 +63,10 @@ const AboutSection = () => {
           <div className="relative">
             <img
               src="/grateful.webp"
-              className="rounded-3xl h-64 sm:h-96 w-full object-cover absolute -rotate-12 hover:rotate-12 transition-transform duration-500 z-10"
+              className="rounded-3xl h-64 sm:h-96 w-full object-cover absolute -rotate-4 hover:rotate-4 transition-transform duration-500 z-10"
               alt=""
             />
-            <div className="rounded-3xl h-64 sm:h-96 bg-cream rotate-12 z-0 opacity-30"></div>
+            <div className="rounded-3xl h-64 sm:h-96 bg-cream rotate-4 z-0 opacity-30"></div>
           </div>
         </motion.div>
       </div>

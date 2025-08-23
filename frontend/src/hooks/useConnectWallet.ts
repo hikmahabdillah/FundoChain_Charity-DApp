@@ -41,7 +41,7 @@ export const useConnectWallet = () => {
       .request({ method: "eth_accounts" })
       .then((accounts: string[]) => {
         if (accounts.length > 0) {
-          setAccount(formatAccount(accounts[0]));
+          setAccount(accounts[0]);
           setProvider(new ethers.BrowserProvider(window.ethereum));
         }
       });
@@ -79,5 +79,5 @@ export const useConnectWallet = () => {
     };
   }, []);
 
-  return { provider, account, connectWallet };
+  return { provider, formatAccount, account, connectWallet };
 };
