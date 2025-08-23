@@ -85,11 +85,7 @@ contract DonationContract{
     return donations;
   }
 
-  // function untuk mengetahui jumlaah saldo saat ini di smart contract
-  function getSmartContractBalance() public view returns(uint){
-    return address(this).balance;
-  }
-
+  // function untuk mendapatkan saldo dari address tertentu
   function getBalance(address _address) public view returns (uint256) {
     return _address.balance;
   }
