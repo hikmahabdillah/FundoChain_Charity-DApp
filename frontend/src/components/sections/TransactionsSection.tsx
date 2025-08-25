@@ -1,4 +1,4 @@
-import React from "react";
+import React, { use, useEffect } from "react";
 import Button from "../common/Button";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
@@ -7,6 +7,9 @@ import { useInView } from "react-intersection-observer";
 import { useCryptoPrices, useGetPriceInUSD } from "../../hooks/useCryptoPrices";
 import DonationForm from "../DonationForm";
 import { useDonationListener } from "../../hooks/useDonationListener";
+import { useConnectWallet } from "../../hooks/useConnectWallet";
+import { useUserData } from "../../hooks/useGetBalance";
+import toast from "react-hot-toast";
 
 type CardProps = {
   className?: string;
@@ -39,6 +42,21 @@ const TransactionsSection = () => {
     uniqueAddresses.add(donation.address);
   });
   const totalDonaturs = uniqueAddresses.size;
+
+  const { account } = useConnectWallet();
+  const { fetchBalance } = useUserData();
+
+  const handleButtonClick = () => {
+    !account
+      ? toast.error("Please connect your wallet to donate.")
+      : setShowModal(true);
+  };
+
+  useEffect(() => {
+    if (account) {
+      fetchBalance(account);
+    }
+  }, [account, fetchBalance]);
 
   console.log("donations", donations);
 
@@ -320,7 +338,7 @@ const TransactionsSection = () => {
           text="Donate Now"
           icon={<img src="/Donate.webp" width={"30px"} alt="Love Icon" />}
           className="bg-brown text-md font-semibold hover:bg-yellow text-dark-brown !rounded-full"
-          onClick={() => setShowModal(true)}
+          onClick={handleButtonClick}
         />
       </div>
       {showModal && (
