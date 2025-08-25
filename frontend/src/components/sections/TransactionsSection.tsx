@@ -1,4 +1,4 @@
-import React, { use, useEffect } from "react";
+import React, { useEffect } from "react";
 import Button from "../common/Button";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
@@ -204,12 +204,12 @@ const TransactionsSection = () => {
           <div className="w-full h-1.5 rounded-full bg-white border border-brown">
             <div
               className={"h-full bg-yellow-400 rounded-full"}
-              style={{ width: `${progress.toFixed(0)}%` }}
+              style={{ width: `${progress ? progress.toFixed(0) : 0}%` }}
             ></div>
           </div>
           <div className="flex items-center justify-between">
             <h4 className="font-semibold text-lg leading-5.5">
-              {progress.toFixed(2)}%
+              {progress ? progress.toFixed(2) : 0}%
             </h4>
             <h4 className="font-semibold text-md leading-5.5">Progress</h4>
           </div>

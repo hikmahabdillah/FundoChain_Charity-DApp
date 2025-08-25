@@ -114,7 +114,7 @@ const Navbar: React.FC = () => {
             />
           )}
           {account && isUserMenuOpen && (
-            <div className="shadow-md absolute top-20 right-6 z-50 my-4 text-base list-none bg-amber-50 divide-y divide-orange-100 rounded-lg">
+            <div className="w-full max-w-3xs shadow-md absolute top-20 right-6 z-50 my-4 text-base list-none bg-amber-50 divide-y divide-orange-100 rounded-lg">
               <UserMenu
                 formatBalance={formatBalance}
                 ethPrice={ethPrice}

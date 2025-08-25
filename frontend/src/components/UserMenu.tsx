@@ -1,5 +1,7 @@
 import React from "react";
 import { FaEthereum, FaClock, FaWallet } from "react-icons/fa";
+import { useConnectWallet } from "../hooks/useConnectWallet";
+import { useContract } from "../hooks/useContract";
 
 interface UserMenuProps {
   formatBalance: string | number;
@@ -12,6 +14,12 @@ const UserMenu: React.FC<UserMenuProps> = ({
   ethPrice,
   getPrice,
 }) => {
+  const { account } = useConnectWallet();
+  const { owner } = useContract();
+
+  const normalizedAccount = account?.trim().toLowerCase();
+  const normalizedOwner = owner?.trim().toLowerCase();
+
   return (
     <ul className="py-2">
       <li>
@@ -45,14 +53,18 @@ const UserMenu: React.FC<UserMenuProps> = ({
           <FaClock /> Transaction History
         </a>
       </li>
-      <li>
-        <button
-          // onClick={onDisconnect}
-          className="w-full text-left flex items-center gap-2 p-4 text-sm text-red-600 hover:bg-red-100"
-        >
-          <FaWallet /> Disconnect Wallet
-        </button>
-      </li>
+      {normalizedAccount === normalizedOwner && (
+        <>
+          <li>
+            <a
+              href="#"
+              className="flex items-center gap-2 p-4 text-sm text-yellow-900 hover:bg-orange-100"
+            >
+              <FaWallet /> Withdraw
+            </a>
+          </li>
+        </>
+      )}
     </ul>
   );
 };

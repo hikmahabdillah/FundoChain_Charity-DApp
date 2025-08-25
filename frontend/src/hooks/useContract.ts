@@ -18,6 +18,7 @@ const addresses: ContractAddress = {
 export const useContract = () => {
   const { provider, account } = useConnectWallet();
   const [contract, setContract] = useState<ethers.Contract | null>(null);
+  const [owner, setOwner] = useState<string | null>(null);
 
   useEffect(() => {
     const getContractInstance = async () => {
@@ -42,6 +43,7 @@ export const useContract = () => {
             signer
           );
           setContract(contractInstance);
+          setOwner(await contractInstance.owner());
         } catch (error) {
           console.error("Gagal membuat instance kontrak:", error);
           setContract(null);
@@ -57,5 +59,5 @@ export const useContract = () => {
     getContractInstance();
   }, [provider, account]);
 
-  return { contract };
+  return { contract, owner };
 };
