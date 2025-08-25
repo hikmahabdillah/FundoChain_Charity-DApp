@@ -34,7 +34,7 @@ const HeroSections = () => {
         />
         <motion.img
           src="/cuate.webp"
-          className="w-56 sm:w-[300px] mt-5"
+          className="w-56 sm:w-[300px] mt-5 z-10"
           width={"300px"}
           alt=""
           initial={{ opacity: 0, y: 50 }}

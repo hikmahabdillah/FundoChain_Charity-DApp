@@ -3,9 +3,9 @@ import Button from "./Button";
 import type { NavItem } from "../../types/navmenu";
 import { motion } from "motion/react";
 import { useConnectWallet } from "../../hooks/useConnectWallet";
-import { FaEthereum, FaClock, FaWallet } from "react-icons/fa";
 import { useUserData } from "../../hooks/useGetBalance.ts";
 import { useCryptoPrices, useGetPriceInUSD } from "../../hooks/useCryptoPrices";
+import UserMenu from "../UserMenu.tsx";
 
 const navItems: NavItem[] = [
   { label: "Home", href: "#hero" },
@@ -113,55 +113,16 @@ const Navbar: React.FC = () => {
               onClick={toggleUserMenu}
             />
           )}
+          {account && isUserMenuOpen && (
+            <div className="shadow-md absolute top-20 right-6 z-50 my-4 text-base list-none bg-amber-50 divide-y divide-orange-100 rounded-lg">
+              <UserMenu
+                formatBalance={formatBalance}
+                ethPrice={ethPrice}
+                getPrice={getPrice}
+              />
+            </div>
+          )}
         </div>
-        {account && isUserMenuOpen && (
-          <div
-            className="shadow-md absolute top-20 right-15 z-50 my-4 text-base list-none bg-amber-50 divide-y divide-orange-100 rounded-lg"
-            id="user-dropdown"
-          >
-            <ul className="py-2">
-              <li>
-                <span className="text-sm text-dark-brown font-semibold ps-3 py-2 block">
-                  Current Balance
-                </span>
-                <div className="flex items-center gap-2 ps-2 pe-3 py-2 hover:bg-orange-100 border-l-4 border-brown bg-cream/10">
-                  <FaEthereum size={30} />
-                  <div className="flex flex-col">
-                    <span className="text-lg text-dark-brown font-semibold">
-                      {formatBalance} ETH
-                    </span>
-                    {ethPrice && getPrice ? (
-                      <span className="text-sm text-dark-brown/80 font-medium ">
-                        ≈ {getPrice} USD
-                      </span>
-                    ) : (
-                      <span className="text-sm text-dark-brown/80 font-medium ">
-                        Fetching price...
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </li>
-              <hr className="text-cream/20 mx-2 h-1" />
-              <li>
-                <a
-                  href="#"
-                  className="flex items-center gap-2 px-4 py-2 text-sm text-yellow-900 hover:bg-orange-100"
-                >
-                  <FaClock /> Transaction History
-                </a>
-              </li>
-              <li>
-                <button
-                  // onClick={onDisconnect}
-                  className="w-full text-left flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-100"
-                >
-                  <FaWallet /> Disconnect Wallet
-                </button>
-              </li>
-            </ul>
-          </div>
-        )}
       </nav>
 
       {/* Mobile Menu */}
@@ -201,6 +162,13 @@ const Navbar: React.FC = () => {
                   }
                   onClick={toggleUserMenu}
                   className="w-full rounded-lg border-2 shadow-sm border-dark-brown/10 text-sm font-semibold text-yellow !py-2.5 transition-all duration-300 hover:scale-95"
+                />
+              )}
+              {account && isUserMenuOpen && (
+                <UserMenu
+                  formatBalance={formatBalance}
+                  ethPrice={ethPrice}
+                  getPrice={getPrice}
                 />
               )}
             </li>
