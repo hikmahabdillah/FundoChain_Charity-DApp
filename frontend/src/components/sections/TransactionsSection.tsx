@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import Button from "../common/Button";
-import { Link } from "react-router-dom";
 import { motion } from "motion/react";
-import CountUp from "../CountUp";
 import { useInView } from "react-intersection-observer";
 import { useCryptoPrices, useGetPriceInUSD } from "../../hooks/useCryptoPrices";
 import DonationForm from "../DonationForm";
@@ -10,28 +8,11 @@ import { useDonationListener } from "../../hooks/useDonationListener";
 import { useConnectWallet } from "../../hooks/useConnectWallet";
 import { useUserData } from "../../hooks/useGetBalance";
 import toast from "react-hot-toast";
-
-type CardProps = {
-  className?: string;
-  children: React.ReactNode;
-};
-
-const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, children }, ref) => (
-    <motion.div
-      className={`rounded-lg p-4 shadow ${className}`}
-      initial={{ opacity: 0 }}
-      whileInView={{
-        opacity: 1,
-        transition: { duration: 1, delay: 0.5 },
-      }}
-      viewport={{ once: true }}
-      ref={ref}
-    >
-      {children}
-    </motion.div>
-  )
-);
+import GoalsCard from "../card/GoalsCard";
+import RaisedCard from "../card/RaisedCard";
+import LatestDonationCard from "../card/LatestDonationCard";
+import TotalDonorsCard from "../card/TotalDonorsCard";
+import Card from "../common/Card";
 
 const TransactionsSection = () => {
   const [showModal, setShowModal] = React.useState<boolean>(false);
@@ -60,7 +41,7 @@ const TransactionsSection = () => {
 
   console.log("donations", donations);
 
-  const { ref, inView } = useInView({
+  const { ref } = useInView({
     triggerOnce: true,
     threshold: 0,
   });
@@ -80,7 +61,7 @@ const TransactionsSection = () => {
     amount: item.amount,
     from: shortenAddress(item.address),
     isDisplay: item.isDisplay,
-    name: item.donorName,
+    name: item.donorName ?? "",
   }));
 
   const totalRaised = datas.reduce(
@@ -178,145 +159,22 @@ const TransactionsSection = () => {
 
       <div className="grid grid-cols-1 grid-rows-6 sm:grid-cols-2 lg:grid-cols-3 md:grid-rows-4 gap-4 p-6 bg-[#fef5ea] h-auto w-full max-w-5xl mx-auto mt-7">
         {/* Goals Card */}
-        <Card
+        <GoalsCard
           ref={ref}
-          className="col-span-1 row-span-2 !shadow-none flex flex-col gap-2 text-dark-brown self-center"
-        >
-          <h3 className="font-semibold text-lg">Goals</h3>
-          <div className="flex gap-1 items-center">
-            <img src="/Ethereum.webp" width={"50px"} alt="" />
-            <div>
-              <div className="flex items-center gap-1">
-                <CountUp
-                  from={0}
-                  to={goalsEth}
-                  separator=","
-                  duration={3}
-                  className="count-up-text font-semibold text-2xl"
-                />
-                <h4 className="font-semibold text-2xl leading-7.5">ETH</h4>
-              </div>
-              <motion.h4 className="font-semibold text-md leading-5.5">
-                {loading ? <div>Loading...</div> : goalsPrice}
-              </motion.h4>
-            </div>
-          </div>
-          <div className="w-full h-1.5 rounded-full bg-white border border-brown">
-            <div
-              className={"h-full bg-yellow-400 rounded-full"}
-              style={{ width: `${progress ? progress.toFixed(0) : 0}%` }}
-            ></div>
-          </div>
-          <div className="flex items-center justify-between">
-            <h4 className="font-semibold text-lg leading-5.5">
-              {progress ? progress.toFixed(2) : 0}%
-            </h4>
-            <h4 className="font-semibold text-md leading-5.5">Progress</h4>
-          </div>
-        </Card>
+          props={{ goalsEth, loading, progress, goalsPrice }}
+        />
 
         {/* Raised Card */}
-        <Card
+        <RaisedCard
           ref={ref}
-          className="col-span-1 row-span-4 bg-gradient-to-b from-light-yellow to-cream text-dark-brown flex flex-col items-center justify-between gap-3"
-        >
-          <div className="flex items-center gap-2 w-full">
-            <div className="w-full h-0.75 bg-dark-brown"></div>
-            <h3 className="font-semibold text-lg text-nowrap">Raised</h3>
-            <div className="w-full h-0.75 bg-dark-brown"></div>
-          </div>
-          <div className="flex gap-1 items-center">
-            <img src="/Ethereum.webp" width={"70px"} alt="" />
-            <div className="self-center mt-2">
-              <div ref={ref} className="flex items-center gap-2">
-                <CountUp
-                  from={0}
-                  to={formatTotalRaised}
-                  separator=","
-                  duration={3}
-                  className="count-up-text font-semibold text-4xl leading-7.5"
-                />
-                <h4 className="font-semibold text-4xl leading-7.5">ETH</h4>
-              </div>
-              <h4 className="font-semibold text-lg leading-7.5">
-                {loading && <div>Loading...</div>}
-                {raisedPrice}
-              </h4>
-            </div>
-          </div>
-          <p className="text-sm text-center text-dark-brown font-semibold">
-            Keep the momentum going — we're almost there!
-          </p>
-        </Card>
+          props={{ formatTotalRaised, loading, raisedPrice }}
+        />
 
         {/* Latest Donations Card */}
-        <Card
-          ref={ref}
-          className="col-span-1 row-span-3 bg-emerald-900 flex flex-col justify-between gap-3"
-        >
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-3 w-full">
-              <h3 className="font-medium text-lg text-nowrap text-light-yellow">
-                Latest Donations
-              </h3>
-              <div className="w-full h-0.75 bg-light-yellow"></div>
-            </div>
-            <div className="flex flex-col gap-1">
-              {latestDonations.length > 0 ? (
-                latestDonations.map((donation, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between font-medium text-white"
-                  >
-                    <li>{donation.amount} ETH</li>
-                    <p>
-                      from {donation?.isDisplay ? donation.name : donation.from}
-                    </p>
-                  </div>
-                ))
-              ) : (
-                <p className="text-white text-center">No donations yet</p>
-              )}
-              <Link
-                to={"/transactions-log"}
-                className="font-medium underline text-light-yellow self-end mt-3"
-              >
-                View all
-              </Link>
-            </div>
-          </div>
-          <p className="text-sm text-light-yellow font-medium">
-            Testnet Ethereum Sepolia
-          </p>
-        </Card>
+        <LatestDonationCard ref={ref} props={{ latestDonations }} />
 
         {/* Total Donors Card */}
-        <Card
-          ref={ref}
-          className="col-span-1 row-span-2 flex flex-col gap-3 bg-white text-dark-brown"
-        >
-          <div className="flex items-center gap-3">
-            <h3 className="font-semibold text-lg text-nowrap">Total Donors</h3>
-            <div className="w-full h-0.75 bg-dark-brown"></div>
-          </div>
-          <div className="flex gap-1 ms-2">
-            <div ref={ref}>
-              {inView && (
-                <CountUp
-                  from={0}
-                  to={totalDonaturs}
-                  separator=","
-                  duration={2}
-                  className="font-semibold text-4xl text-yellow text-nowrap"
-                />
-              )}
-            </div>
-            <h4 className="font-semibold text-md self-end">People</h4>
-          </div>
-          <p className="text-sm text-dark-brown font-medium">
-            Thank you to every kind soul who has contributed.
-          </p>
-        </Card>
+        <TotalDonorsCard ref={ref} props={{ totalDonaturs }} />
 
         {/* Call to Action Card */}
         <Card
